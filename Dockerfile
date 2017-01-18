@@ -19,3 +19,10 @@ USER jenkins-slave
 VOLUME /home/jenkins-slave
 
 ENTRYPOINT ["/usr/local/bin/jenkins-slave.sh"]
+
+# install docker-engine
+USER root
+RUN apt-get update && apt-get -y install curl
+RUN curl -fsSL https://get.docker.com/ | sh
+RUN apt-get update && apt-cache policy docker-engine && apt-get --force-yes -y install docker-engine=1.11.2-0~jessie
+RUN usermod -aG docker jenkins-slave
