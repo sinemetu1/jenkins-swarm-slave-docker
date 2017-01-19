@@ -15,14 +15,15 @@ RUN curl --create-dirs -sSLo /usr/share/jenkins/swarm-client-$JENKINS_SWARM_VERS
 
 COPY jenkins-slave.sh /usr/local/bin/jenkins-slave.sh
 
-USER jenkins-slave
-VOLUME /home/jenkins-slave
-
-ENTRYPOINT ["/usr/local/bin/jenkins-slave.sh"]
-
 # install docker-engine
 USER root
 RUN apt-get update && apt-get -y install curl
 RUN curl -fsSL https://get.docker.com/ | sh
 RUN apt-get update && apt-cache policy docker-engine && apt-get --force-yes -y install docker-engine=1.11.2-0~jessie
 RUN usermod -aG docker jenkins-slave
+RUN usermod -aG users jenkins-slave
+
+USER jenkins-slave
+VOLUME /home/jenkins-slave
+
+ENTRYPOINT ["/usr/local/bin/jenkins-slave.sh"]
