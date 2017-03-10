@@ -52,3 +52,10 @@ RUN \
   apt-get install sbt && \
   sbt sbtVersion
 
+# Install hub
+RUN \
+  curl -OL https://github.com/github/hub/releases/download/v2.3.0-pre9/hub-linux-amd64-2.3.0-pre9.tgz && \
+  tar xf hub-linux-amd64-2.3.0-pre9.tgz && \
+  rm hub-linux-amd64-2.3.0-pre9.tgz && \
+  mv hub-linux-amd64-2.3.0-pre9 /opt/hub && \
+  ln -s /opt/hub/bin/hub /usr/bin/hub
